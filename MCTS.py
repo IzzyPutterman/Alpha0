@@ -11,7 +11,10 @@ class MCTS:
   def search(self, sNode, nn, initGame):
     if "game over":
       'done'
-    
+    if sNode not in 'evald':
+      'eval with neural net'
+      'initialize that branch'
+      'add to seen'
     #Iterativeley select move with upper confidence bound until find a good node
     uMax, Move = -float_inf, -1 #incase nothing is found
     for a in 'possible moves':
@@ -23,7 +26,7 @@ class MCTS:
     Move = max(-1, max('possible moves', key=lambda a:  Q + 2**(1/2) * P * (sum(N)**(1/2))/(1 + N(a)))
     uMax = 'above evaluated'
     #Evaluate node in NN
-    newGames = #initGame updated for gMove
+    newGames = 'initGame updated for gMove'
     v = self.search(Move, nn, newGame)
     #Update visit count of nodes transversed
     N(sNode, a) += 1 
