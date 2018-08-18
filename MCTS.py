@@ -6,9 +6,14 @@ Q(s,a) = 'mean action value'
 P(s,a) = 'prior prob of selecting this action'
 
 class MCTS:
-  def __init__(self):
-    #Not sure what to initialize, if anything
-  def search(self, sNode, nn, initGame):
+  def __init__(self, nn):
+    self.nn = nn
+    self.Ns = {}
+    self.Wsa = {}
+    self.Qsa = {}
+    self.Ps = {}
+    
+  def search(self, currBoard):
     if "game over":
       'done'
     if sNode not in 'evald':
