@@ -6,36 +6,39 @@ Q(s,a) = 'mean action value'
 P(s,a) = 'prior prob of selecting this action'
 
 class MCTS:
-  def __init__(self, nn):
+  def __init__(self, nn, gameIns):
     self.nn = nn
+    self.game = gameIns
     self.Ns = {}
-    self.Wsa = {}
+    self.Nsa = {}
     self.Qsa = {}
     self.Ps = {}
     
   def search(self, currBoard):
-    if "game over":
-      'done'
-    if sNode not in 'evald':
-      'eval with neural net'
-      'initialize that branch'
-      'add to seen'
+    s = self.game.stringRepresentation(currBoard) #hashForm
+    if self.game.getGameEnded(currBoard):
+      return
+    if s not in Ps:
+      self.Ps[s], v = self.nn.predict()
+      return -v
     #Iterativeley select move with upper confidence bound until find a good node
     uMax, Move = -float_inf, -1 #incase nothing is found
-    for a in 'possible moves':
-      poss_u = Q + 2**(1/2) * P * (sum(N)**(1/2))/(1 + N(a)
+    for a in self.game.getValidMoves(currBoard):
+      poss_u = Q[(s,a)] + 2**(1/2) * P[s] * (sum(N[s])**(1/2))/(1 + N[(s,a)]))
       if poss_u > uMax:
          uMax = poss_u
          Move = a
     #or could do this
     Move = max(-1, max('possible moves', key=lambda a:  Q + 2**(1/2) * P * (sum(N)**(1/2))/(1 + N(a)))
     uMax = 'above evaluated'
-    #Evaluate node in NN
-    newGames = 'initGame updated for gMove'
-    v = self.search(Move, nn, newGame)
+               
+               
+    newBoard, newPlayer = self.game.nextState(currBoard, 1, Move)
+    v = self.search(newBoard)
     #Update visit count of nodes transversed
-    N(sNode, a) += 1 
+   
     #Update action value
-    W(sNode, a) += v
-    Q(sNode, a) = W(sNode, a)/ N(sNode, a)
-    return v
+    Q[(s, Move)] = (self.Nsa.get((s,Move),0) * self.Qsa.get((s,Move),0) + v)/(N[(s,Move)] + 1)
+    N[(s,a)] += 1
+    N[s] += 1 
+    return -v
