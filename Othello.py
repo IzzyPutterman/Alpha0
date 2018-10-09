@@ -2,12 +2,11 @@
 from __future__ import print_function
 import sys
 sys.path.append('..')
-from Game import Game
-from .Board import Board
+from Board import Board
 import numpy as np
 
 
-class OthelloGame(Game):
+class OthelloGame:
     def __init__(self, n):
         self.n = n
 
